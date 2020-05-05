@@ -950,7 +950,7 @@ func (n *CreateTableStmt) Restore(ctx *format.RestoreCtx) error {
 		ctx.WritePlain("(")
 		for i, col := range n.Cols {
 			if i > 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := col.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while splicing CreateTableStmt ColumnDef: [%v]", i)
@@ -958,7 +958,7 @@ func (n *CreateTableStmt) Restore(ctx *format.RestoreCtx) error {
 		}
 		for i, constraint := range n.Constraints {
 			if i > 0 || lenCols >= 1 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := constraint.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while splicing CreateTableStmt Constraints: [%v]", i)
@@ -1299,7 +1299,7 @@ func (n *CreateViewStmt) Restore(ctx *format.RestoreCtx) error {
 		if i == 0 {
 			ctx.WritePlain(" (")
 		} else {
-			ctx.WritePlain(",")
+			ctx.WritePlain(", ")
 		}
 		ctx.WriteName(col.O)
 		if i == len(n.Cols)-1 {
@@ -2013,7 +2013,7 @@ func (n *TableOption) Restore(ctx *format.RestoreCtx) error {
 		ctx.WritePlain("= (")
 		for i, tableName := range n.TableNames {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			tableName.Restore(ctx)
 		}
@@ -2500,7 +2500,7 @@ func (n *AlterTableSpec) Restore(ctx *format.RestoreCtx) error {
 		ctx.WriteKeyWord("ORDER BY ")
 		for i, alterOrderItem := range n.OrderByList {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := alterOrderItem.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while restore AlterTableSpec.OrderByList[%d]", i)
@@ -2555,7 +2555,7 @@ func (n *AlterTableSpec) Restore(ctx *format.RestoreCtx) error {
 		}
 		for i, name := range n.PartitionNames {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			ctx.WriteName(name.O)
 		}
@@ -2567,7 +2567,7 @@ func (n *AlterTableSpec) Restore(ctx *format.RestoreCtx) error {
 		}
 		for i, name := range n.PartitionNames {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			ctx.WriteName(name.O)
 		}
@@ -2579,7 +2579,7 @@ func (n *AlterTableSpec) Restore(ctx *format.RestoreCtx) error {
 		}
 		for i, name := range n.PartitionNames {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			ctx.WriteName(name.O)
 		}
@@ -2594,7 +2594,7 @@ func (n *AlterTableSpec) Restore(ctx *format.RestoreCtx) error {
 		}
 		for i, name := range n.PartitionNames {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			ctx.WriteName(name.O)
 		}
@@ -2609,7 +2609,7 @@ func (n *AlterTableSpec) Restore(ctx *format.RestoreCtx) error {
 		}
 		for i, name := range n.PartitionNames {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			ctx.WriteName(name.O)
 		}
@@ -2620,7 +2620,7 @@ func (n *AlterTableSpec) Restore(ctx *format.RestoreCtx) error {
 		} else {
 			for i, name := range n.PartitionNames {
 				if i != 0 {
-					ctx.WritePlain(",")
+					ctx.WritePlain(", ")
 				}
 				ctx.WriteName(name.O)
 			}
@@ -2633,7 +2633,7 @@ func (n *AlterTableSpec) Restore(ctx *format.RestoreCtx) error {
 		} else {
 			for i, name := range n.PartitionNames {
 				if i != 0 {
-					ctx.WritePlain(",")
+					ctx.WritePlain(", ")
 				}
 				ctx.WriteName(name.O)
 			}
@@ -2664,7 +2664,7 @@ func (n *AlterTableSpec) Restore(ctx *format.RestoreCtx) error {
 		}
 		for i, name := range n.PartitionNames {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			ctx.WriteName(name.O)
 		}
@@ -2678,7 +2678,7 @@ func (n *AlterTableSpec) Restore(ctx *format.RestoreCtx) error {
 		}
 		for i, name := range n.PartitionNames {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			} else {
 				ctx.WritePlain(" ")
 			}
@@ -3131,7 +3131,7 @@ func (n *PartitionDefinition) Restore(ctx *format.RestoreCtx) error {
 		ctx.WritePlain(" (")
 		for i, spd := range n.Sub {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := spd.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while restore PartitionDefinition.Sub[%d]", i)
@@ -3197,7 +3197,7 @@ func (n *PartitionMethod) Restore(ctx *format.RestoreCtx) error {
 		ctx.WritePlain(" (")
 		for i, col := range n.ColumnNames {
 			if i > 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := col.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while splicing PartitionMethod.ColumnName[%d]", i)
@@ -3323,7 +3323,7 @@ func (n *PartitionOptions) Restore(ctx *format.RestoreCtx) error {
 		ctx.WritePlain(" (")
 		for i, def := range n.Definitions {
 			if i > 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := def.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while restore PartitionOptions.Definitions[%d]", i)

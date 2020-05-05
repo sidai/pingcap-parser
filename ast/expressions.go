@@ -701,7 +701,7 @@ func (n *PatternInExpr) Restore(ctx *format.RestoreCtx) error {
 		ctx.WritePlain("(")
 		for i, expr := range n.List {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := expr.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while restore PatternInExpr.List[%d]", i)
@@ -1113,7 +1113,7 @@ func (n *RowExpr) Restore(ctx *format.RestoreCtx) error {
 	ctx.WritePlain("(")
 	for i, v := range n.Values {
 		if i != 0 {
-			ctx.WritePlain(",")
+			ctx.WritePlain(", ")
 		}
 		if err := v.Restore(ctx); err != nil {
 			return errors.Annotatef(err, "An error occurred when restore RowExpr.Values[%v]", i)
@@ -1334,7 +1334,7 @@ func (n *MatchAgainst) Restore(ctx *format.RestoreCtx) error {
 	ctx.WritePlain(" (")
 	for i, v := range n.ColumnNames {
 		if i != 0 {
-			ctx.WritePlain(",")
+			ctx.WritePlain(", ")
 		}
 		if err := v.Restore(ctx); err != nil {
 			return errors.Annotatef(err, "An error occurred while restore MatchAgainst.ColumnNames[%d]", i)
