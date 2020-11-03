@@ -1888,6 +1888,10 @@ const (
 	ShowTableNextRowId
 	ShowBackup
 	ShowRestore
+	ShowBinlogEvents
+	ShowRelayLogEvents
+	ShowBinaryLogs
+	ShowMasterLogs
 )
 
 const (
@@ -1927,6 +1931,12 @@ type ShowStmt struct {
 	Pattern     *PatternLikeExpr
 	Where       ExprNode
 
+	// Used for `SHOW BINLOG/RELAYLOG EVENTS` syntax
+	LogName    string
+	LogPos     int64
+	LogLimit   *Limit
+	LogChannel string
+
 	ShowProfileTypes []int  // Used for `SHOW PROFILE` syntax
 	ShowProfileArgs  *int64 // Used for `SHOW PROFILE` syntax
 	ShowProfileLimit *Limit // Used for `SHOW PROFILE` syntax
@@ -1964,6 +1974,27 @@ func (n *ShowStmt) Restore(ctx *format.RestoreCtx) error {
 			if err := n.Where.Restore(ctx); err != nil {
 				return errors.Annotate(err, "An error occurred while restore ShowStmt.Where")
 			}
+		}
+		return nil
+	}
+	restoreLogEventOpt := func() error {
+		if n.LogName != "" {
+			ctx.WriteKeyWord(" IN ")
+			ctx.WriteString(n.LogName)
+		}
+		if n.LogPos != 0 {
+			ctx.WriteKeyWord(" FROM ")
+			ctx.WritePlainf("%d", n.LogPos)
+		}
+		if n.LogLimit != nil {
+			ctx.WritePlain(" ")
+			if err := n.LogLimit.Restore(ctx); err != nil {
+				return errors.Annotate(err, "An error occurred while restore LogEvent.Limit")
+			}
+		}
+		if n.LogChannel != "" {
+			ctx.WriteKeyWord(" FOR CHANNEL ")
+			ctx.WriteString(n.LogChannel)
 		}
 		return nil
 	}
@@ -2199,6 +2230,20 @@ func (n *ShowStmt) Restore(ctx *format.RestoreCtx) error {
 			ctx.WriteKeyWord("BACKUP")
 		case ShowRestore:
 			ctx.WriteKeyWord("RESTORE")
+		case ShowBinlogEvents:
+			ctx.WriteKeyWord("BINLOG EVENTS")
+			if err := restoreLogEventOpt(); err != nil {
+				return err
+			}
+		case ShowRelayLogEvents:
+			ctx.WriteKeyWord("RELAYLOG EVENTS")
+			if err := restoreLogEventOpt(); err != nil {
+				return err
+			}
+		case ShowBinaryLogs:
+			ctx.WriteKeyWord("BINARY LOGS")
+		case ShowMasterLogs:
+			ctx.WriteKeyWord("MASTER LOGS")
 		default:
 			return errors.New("Unknown ShowStmt type")
 		}
