@@ -348,7 +348,7 @@ func (n *ExecuteStmt) Restore(ctx *format.RestoreCtx) error {
 		ctx.WriteKeyWord(" USING ")
 		for i, val := range n.UsingVars {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := val.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while restore ExecuteStmt.UsingVars index %d", i)
@@ -986,7 +986,7 @@ func (n *SetRoleStmt) Restore(ctx *format.RestoreCtx) error {
 			return errors.Annotate(err, "An error occurred while restore SetRoleStmt.RoleList")
 		}
 		if i != len(n.RoleList)-1 {
-			ctx.WritePlain(",")
+			ctx.WritePlain(", ")
 		}
 	}
 	return nil
@@ -1026,7 +1026,7 @@ func (n *SetDefaultRoleStmt) Restore(ctx *format.RestoreCtx) error {
 			return errors.Annotate(err, "An error occurred while restore SetDefaultRoleStmt.RoleList")
 		}
 		if i != len(n.RoleList)-1 {
-			ctx.WritePlain(",")
+			ctx.WritePlain(", ")
 		}
 	}
 	ctx.WritePlain(" TO")
@@ -1037,7 +1037,7 @@ func (n *SetDefaultRoleStmt) Restore(ctx *format.RestoreCtx) error {
 			return errors.Annotate(err, "An error occurred while restore SetDefaultRoleStmt.UserList")
 		}
 		if i != len(n.UserList)-1 {
-			ctx.WritePlain(",")
+			ctx.WritePlain(", ")
 		}
 	}
 	return nil
@@ -1871,7 +1871,7 @@ func (n *PrivElem) Restore(ctx *format.RestoreCtx) error {
 		ctx.WritePlain(" (")
 		for i, v := range n.Cols {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := v.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while restore PrivElem.Cols[%d]", i)

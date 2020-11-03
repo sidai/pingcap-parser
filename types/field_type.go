@@ -209,7 +209,7 @@ func (ft *FieldType) Restore(ctx *format.RestoreCtx) error {
 		ctx.WritePlain("(")
 		for i, e := range ft.Elems {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			ctx.WriteString(e)
 		}

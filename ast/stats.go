@@ -75,7 +75,7 @@ func (n *AnalyzeTableStmt) Restore(ctx *format.RestoreCtx) error {
 	}
 	for i, table := range n.TableNames {
 		if i != 0 {
-			ctx.WritePlain(",")
+			ctx.WritePlain(", ")
 		}
 		if err := table.Restore(ctx); err != nil {
 			return errors.Annotatef(err, "An error occurred while restore AnalyzeTableStmt.TableNames[%d]", i)
@@ -86,7 +86,7 @@ func (n *AnalyzeTableStmt) Restore(ctx *format.RestoreCtx) error {
 	}
 	for i, partition := range n.PartitionNames {
 		if i != 0 {
-			ctx.WritePlain(",")
+			ctx.WritePlain(", ")
 		}
 		ctx.WriteName(partition.O)
 	}
@@ -95,7 +95,7 @@ func (n *AnalyzeTableStmt) Restore(ctx *format.RestoreCtx) error {
 	}
 	for i, index := range n.IndexNames {
 		if i != 0 {
-			ctx.WritePlain(",")
+			ctx.WritePlain(", ")
 		} else {
 			ctx.WritePlain(" ")
 		}
@@ -105,7 +105,7 @@ func (n *AnalyzeTableStmt) Restore(ctx *format.RestoreCtx) error {
 		ctx.WriteKeyWord(" WITH")
 		for i, opt := range n.AnalyzeOpts {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			ctx.WritePlainf(" %d ", opt.Value)
 			ctx.WritePlain(AnalyzeOptionString[opt.Type])

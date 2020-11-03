@@ -130,7 +130,7 @@ func (n *Join) Restore(ctx *format.RestoreCtx) error {
 		ctx.WritePlain("(")
 		for i, v := range n.Using {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := v.Restore(ctx); err != nil {
 				return errors.Annotate(err, "An error occurred while restore Join.Using")
@@ -315,7 +315,7 @@ type DeleteTableList struct {
 func (n *DeleteTableList) Restore(ctx *format.RestoreCtx) error {
 	for i, t := range n.Tables {
 		if i != 0 {
-			ctx.WritePlain(",")
+			ctx.WritePlain(", ")
 		}
 		if err := t.Restore(ctx); err != nil {
 			return errors.Annotatef(err, "An error occurred while restore DeleteTableList.Tables[%v]", i)
@@ -673,7 +673,7 @@ func (n *GroupByClause) Restore(ctx *format.RestoreCtx) error {
 	ctx.WriteKeyWord("GROUP BY ")
 	for i, v := range n.Items {
 		if i != 0 {
-			ctx.WritePlain(",")
+			ctx.WritePlain(", ")
 		}
 		if err := v.Restore(ctx); err != nil {
 			return errors.Annotatef(err, "An error occurred while restore GroupByClause.Items[%d]", i)
@@ -741,7 +741,7 @@ func (n *OrderByClause) Restore(ctx *format.RestoreCtx) error {
 	ctx.WriteKeyWord("ORDER BY ")
 	for i, item := range n.Items {
 		if i != 0 {
-			ctx.WritePlain(",")
+			ctx.WritePlain(", ")
 		}
 		if err := item.Restore(ctx); err != nil {
 			return errors.Annotatef(err, "An error occurred while restore OrderByClause.Items[%d]", i)
@@ -851,7 +851,7 @@ func (n *SelectStmt) Restore(ctx *format.RestoreCtx) error {
 	if n.Fields != nil {
 		for i, field := range n.Fields.Fields {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := field.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while restore SelectStmt.Fields[%d]", i)
@@ -894,7 +894,7 @@ func (n *SelectStmt) Restore(ctx *format.RestoreCtx) error {
 		ctx.WriteKeyWord(" WINDOW ")
 		for i, windowsSpec := range n.WindowSpecs {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := windowsSpec.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while restore SelectStmt.WindowSpec[%d]", i)
@@ -1223,7 +1223,7 @@ func (n *LoadDataStmt) Restore(ctx *format.RestoreCtx) error {
 		ctx.WritePlain(" (")
 		for i, c := range n.ColumnsAndUserVars {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if c.ColumnName != nil {
 				if err := c.ColumnName.Restore(ctx); err != nil {
@@ -1244,7 +1244,7 @@ func (n *LoadDataStmt) Restore(ctx *format.RestoreCtx) error {
 		ctx.WriteKeyWord(" SET")
 		for i, assign := range n.ColumnAssignments {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			ctx.WritePlain(" ")
 			if err := assign.Restore(ctx); err != nil {
@@ -1396,7 +1396,7 @@ func (n *InsertStmt) Restore(ctx *format.RestoreCtx) error {
 		ctx.WritePlain(" (")
 		for i, v := range n.Columns {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := v.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while restore InsertStmt.Columns[%d]", i)
@@ -1408,12 +1408,12 @@ func (n *InsertStmt) Restore(ctx *format.RestoreCtx) error {
 		ctx.WriteKeyWord(" VALUES ")
 		for i, row := range n.Lists {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			ctx.WritePlain("(")
 			for j, v := range row {
 				if j != 0 {
-					ctx.WritePlain(",")
+					ctx.WritePlain(", ")
 				}
 				if err := v.Restore(ctx); err != nil {
 					return errors.Annotatef(err, "An error occurred while restore InsertStmt.Lists[%d][%d]", i, j)
@@ -1437,7 +1437,7 @@ func (n *InsertStmt) Restore(ctx *format.RestoreCtx) error {
 		ctx.WriteKeyWord(" SET ")
 		for i, v := range n.Setlist {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := v.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while restore InsertStmt.Setlist[%d]", i)
@@ -1448,7 +1448,7 @@ func (n *InsertStmt) Restore(ctx *format.RestoreCtx) error {
 		ctx.WriteKeyWord(" ON DUPLICATE KEY UPDATE ")
 		for i, v := range n.OnDuplicate {
 			if i != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := v.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while restore InsertStmt.OnDuplicate[%d]", i)
@@ -1804,7 +1804,7 @@ func (n *Limit) Restore(ctx *format.RestoreCtx) error {
 		if err := n.Offset.Restore(ctx); err != nil {
 			return errors.Annotate(err, "An error occurred while restore Limit.Offset")
 		}
-		ctx.WritePlain(",")
+		ctx.WritePlain(", ")
 	}
 	if err := n.Count.Restore(ctx); err != nil {
 		return errors.Annotate(err, "An error occurred while restore Limit.Count")
@@ -2080,7 +2080,7 @@ func (n *ShowStmt) Restore(ctx *format.RestoreCtx) error {
 		if len(n.ShowProfileTypes) > 0 {
 			for i, tp := range n.ShowProfileTypes {
 				if i != 0 {
-					ctx.WritePlain(",")
+					ctx.WritePlain(", ")
 				}
 				ctx.WritePlain(" ")
 				switch tp {
@@ -2715,7 +2715,7 @@ func (n *SplitOption) Restore(ctx *format.RestoreCtx) error {
 		ctx.WritePlain("(")
 		for j, v := range n.Lower {
 			if j != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := v.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while restore SplitOption Lower")
@@ -2727,7 +2727,7 @@ func (n *SplitOption) Restore(ctx *format.RestoreCtx) error {
 		ctx.WritePlain("(")
 		for j, v := range n.Upper {
 			if j != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := v.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while restore SplitOption Upper")
@@ -2741,12 +2741,12 @@ func (n *SplitOption) Restore(ctx *format.RestoreCtx) error {
 	ctx.WriteKeyWord("BY ")
 	for i, row := range n.ValueLists {
 		if i != 0 {
-			ctx.WritePlain(",")
+			ctx.WritePlain(", ")
 		}
 		ctx.WritePlain("(")
 		for j, v := range row {
 			if j != 0 {
-				ctx.WritePlain(",")
+				ctx.WritePlain(", ")
 			}
 			if err := v.Restore(ctx); err != nil {
 				return errors.Annotatef(err, "An error occurred while restore SplitOption.ValueLists[%d][%d]", i, j)
