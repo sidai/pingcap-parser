@@ -83,6 +83,7 @@ import (
 	blobType          "BLOB"
 	both              "BOTH"
 	by                "BY"
+	call              "CALL"
 	cascade           "CASCADE"
 	caseKwd           "CASE"
 	chain             "CHAIN"
@@ -774,6 +775,7 @@ import (
 	BeginTransactionStmt "BEGIN TRANSACTION statement"
 	BinlogStmt           "Binlog base64 statement"
 	BRIEStmt             "BACKUP or RESTORE statement"
+	CallStmt             "CALL statement"
 	CommitStmt           "COMMIT statement"
 	CreateTableStmt      "CREATE TABLE statement"
 	CreateViewStmt       "CREATE VIEW  stetement"
@@ -1189,6 +1191,7 @@ import (
 	BRIEOptions                            "List of BRIE options"
 	BRIEIntegerOptionName                  "Name of a BRIE option which takes an integer as input"
 	BRIEStringOptionName                   "Name of a BRIE option which takes a string as input"
+	ProcedureName                          "Procedure Name"
 
 %type	<ident>
 	AsOpt             "AS or EmptyString"
@@ -3786,6 +3789,26 @@ ViewCheckOption:
 |	"WITH" "LOCAL" "CHECK" "OPTION"
 	{
 		$$ = model.CheckOptionLocal
+	}
+
+/******************************************************************
+ * CALL statement
+ * See https://dev.mysql.com/doc/refman/5.7/en/call.html
+ ******************************************************************/
+CallStmt:
+	"CALL" ProcedureName
+	{
+		$$ = &ast.CallStmt{ProcedureName: $2.(string), Parameters: []ast.ExprNode{}}
+	}
+|   "CALL" ProcedureName '(' ExpressionListOpt ')'
+	{
+		$$ = &ast.CallStmt{ProcedureName: $2.(string), Parameters: $4.([]ast.ExprNode)}
+	}
+
+ProcedureName:
+	Identifier
+	{
+		$$ = $1
 	}
 
 /******************************************************************
@@ -9247,6 +9270,7 @@ Statement:
 |	DeleteFromStmt
 |	ExecuteStmt
 |	ExplainStmt
+|	CallStmt
 |	ChangeStmt
 |	CreateDatabaseStmt
 |	CreateIndexStmt

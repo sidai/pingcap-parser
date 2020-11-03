@@ -2747,3 +2747,45 @@ const (
 	TimestampBoundReadTimestamp
 	TimestampBoundMinReadTimestamp
 )
+
+type CallStmt struct {
+	dmlNode
+
+	ProcedureName string
+	Parameters    []ExprNode
+}
+
+func (n *CallStmt) Restore(ctx *format.RestoreCtx) error {
+	ctx.WriteKeyWord("CALL ")
+	ctx.WriteName(n.ProcedureName)
+
+	ctx.WritePlain("(")
+	for j, v := range n.Parameters {
+		if j != 0 {
+			ctx.WritePlain(",")
+		}
+		if err := v.Restore(ctx); err != nil {
+			return errors.Annotatef(err, "An error occurred while restore CallStmt")
+		}
+	}
+	ctx.WritePlain(")")
+	return nil
+}
+
+func (n *CallStmt) Accept(v Visitor) (Node, bool) {
+	newNode, skipChildren := v.Enter(n)
+	if skipChildren {
+		return v.Leave(newNode)
+	}
+
+	n = newNode.(*CallStmt)
+	for i, val := range n.Parameters {
+		node, ok := val.Accept(v)
+		if !ok {
+			return n, false
+		}
+		n.Parameters[i] = node.(ExprNode)
+	}
+
+	return v.Leave(n)
+}
