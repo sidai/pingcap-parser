@@ -191,7 +191,7 @@ const (
 )
 
 // PrivilegeType  privilege
-type PrivilegeType uint32
+type PrivilegeType uint64
 
 const (
 	_ PrivilegeType = 1 << iota
@@ -235,6 +235,13 @@ const (
 	CreateRolePriv
 	// DropRolePriv is the privilege to drop a role.
 	DropRolePriv
+
+	// ReplicationSlavePriv is the privilege to receive updates to the master's binary log.
+	ReplicationSlavePriv
+	// ReplicationClientPriv is the privilege to execute SHOW MASTER/SLAVE STATUS statements.
+	ReplicationClientPriv
+	// UsagePriv is the privilege to create a user with no privilege
+	UsagePriv
 
 	CreateTMPTablePriv
 	LockTablesPriv
@@ -295,34 +302,37 @@ const PWDHashLen = 40
 
 // Priv2UserCol is the privilege to mysql.user table column name.
 var Priv2UserCol = map[PrivilegeType]string{
-	CreatePriv:         "Create_priv",
-	SelectPriv:         "Select_priv",
-	InsertPriv:         "Insert_priv",
-	UpdatePriv:         "Update_priv",
-	DeletePriv:         "Delete_priv",
-	ShowDBPriv:         "Show_db_priv",
-	SuperPriv:          "Super_priv",
-	CreateUserPriv:     "Create_user_priv",
-	TriggerPriv:        "Trigger_priv",
-	DropPriv:           "Drop_priv",
-	ProcessPriv:        "Process_priv",
-	GrantPriv:          "Grant_priv",
-	ReferencesPriv:     "References_priv",
-	AlterPriv:          "Alter_priv",
-	ExecutePriv:        "Execute_priv",
-	IndexPriv:          "Index_priv",
-	CreateViewPriv:     "Create_view_priv",
-	ShowViewPriv:       "Show_view_priv",
-	CreateRolePriv:     "Create_role_priv",
-	DropRolePriv:       "Drop_role_priv",
-	CreateTMPTablePriv: "Create_tmp_table_priv",
-	LockTablesPriv:     "Lock_tables_priv",
-	CreateRoutinePriv:  "Create_routine_priv",
-	AlterRoutinePriv:   "Alter_routine_priv",
-	EventPriv:          "Event_priv",
-	ShutdownPriv:       "Shutdown_priv",
-	ReloadPriv:         "Reload_priv",
-	FilePriv:           "File_priv",
+	CreatePriv:            "Create_priv",
+	SelectPriv:            "Select_priv",
+	InsertPriv:            "Insert_priv",
+	UpdatePriv:            "Update_priv",
+	DeletePriv:            "Delete_priv",
+	ShowDBPriv:            "Show_db_priv",
+	SuperPriv:             "Super_priv",
+	CreateUserPriv:        "Create_user_priv",
+	TriggerPriv:           "Trigger_priv",
+	DropPriv:              "Drop_priv",
+	ProcessPriv:           "Process_priv",
+	GrantPriv:             "Grant_priv",
+	ReferencesPriv:        "References_priv",
+	AlterPriv:             "Alter_priv",
+	ExecutePriv:           "Execute_priv",
+	IndexPriv:             "Index_priv",
+	CreateViewPriv:        "Create_view_priv",
+	ShowViewPriv:          "Show_view_priv",
+	CreateRolePriv:        "Create_role_priv",
+	DropRolePriv:          "Drop_role_priv",
+	ReplicationSlavePriv:  "Repl_slave_priv",
+	ReplicationClientPriv: "Repl_client_priv",
+	UsagePriv:             "Usage_priv", // For usage privilege, it means no privilege and doesn't have matching column
+	CreateTMPTablePriv:    "Create_tmp_table_priv",
+	LockTablesPriv:        "Lock_tables_priv",
+	CreateRoutinePriv:     "Create_routine_priv",
+	AlterRoutinePriv:      "Alter_routine_priv",
+	EventPriv:             "Event_priv",
+	ShutdownPriv:          "Shutdown_priv",
+	ReloadPriv:            "Reload_priv",
+	FilePriv:              "File_priv",
 }
 
 // Col2PrivType is the privilege tables column name to privilege type.
@@ -347,6 +357,9 @@ var Col2PrivType = map[string]PrivilegeType{
 	"Show_view_priv":        ShowViewPriv,
 	"Create_role_priv":      CreateRolePriv,
 	"Drop_role_priv":        DropRolePriv,
+	"Repl_slave_priv":       ReplicationSlavePriv,
+	"Repl_client_priv":      ReplicationClientPriv,
+	"Usage_priv":            UsagePriv,
 	"Create_tmp_table_priv": CreateTMPTablePriv,
 	"Lock_tables_priv":      LockTablesPriv,
 	"Create_routine_priv":   CreateRoutinePriv,
@@ -395,34 +408,37 @@ var Command2Str = map[byte]string{
 
 // Priv2Str is the map for privilege to string.
 var Priv2Str = map[PrivilegeType]string{
-	CreatePriv:         "Create",
-	SelectPriv:         "Select",
-	InsertPriv:         "Insert",
-	UpdatePriv:         "Update",
-	DeletePriv:         "Delete",
-	ShowDBPriv:         "Show Databases",
-	SuperPriv:          "Super",
-	CreateUserPriv:     "Create User",
-	TriggerPriv:        "Trigger",
-	DropPriv:           "Drop",
-	ProcessPriv:        "Process",
-	GrantPriv:          "Grant Option",
-	ReferencesPriv:     "References",
-	AlterPriv:          "Alter",
-	ExecutePriv:        "Execute",
-	IndexPriv:          "Index",
-	CreateViewPriv:     "Create View",
-	ShowViewPriv:       "Show View",
-	CreateRolePriv:     "Create Role",
-	DropRolePriv:       "Drop Role",
-	CreateTMPTablePriv: "CREATE TEMPORARY TABLES",
-	LockTablesPriv:     "LOCK TABLES",
-	CreateRoutinePriv:  "CREATE ROUTINE",
-	AlterRoutinePriv:   "ALTER ROUTINE",
-	EventPriv:          "EVENT",
-	ShutdownPriv:       "SHUTDOWN",
-	ReloadPriv:         "RELOAD",
-	FilePriv:           "FILE",
+	CreatePriv:            "Create",
+	SelectPriv:            "Select",
+	InsertPriv:            "Insert",
+	UpdatePriv:            "Update",
+	DeletePriv:            "Delete",
+	ShowDBPriv:            "Show Databases",
+	SuperPriv:             "Super",
+	CreateUserPriv:        "Create User",
+	TriggerPriv:           "Trigger",
+	DropPriv:              "Drop",
+	ProcessPriv:           "Process",
+	GrantPriv:             "Grant Option",
+	ReferencesPriv:        "References",
+	AlterPriv:             "Alter",
+	ExecutePriv:           "Execute",
+	IndexPriv:             "Index",
+	CreateViewPriv:        "Create View",
+	ShowViewPriv:          "Show View",
+	CreateRolePriv:        "Create Role",
+	DropRolePriv:          "Drop Role",
+	ReplicationSlavePriv:  "REPLICATION SLAVE",
+	ReplicationClientPriv: "REPLICATION CLIENT",
+	UsagePriv:             "USAGE",
+	CreateTMPTablePriv:    "CREATE TEMPORARY TABLES",
+	LockTablesPriv:        "LOCK TABLES",
+	CreateRoutinePriv:     "CREATE ROUTINE",
+	AlterRoutinePriv:      "ALTER ROUTINE",
+	EventPriv:             "EVENT",
+	ShutdownPriv:          "SHUTDOWN",
+	ReloadPriv:            "RELOAD",
+	FilePriv:              "FILE",
 }
 
 // Priv2SetStr is the map for privilege to string.
@@ -461,7 +477,7 @@ var SetStr2Priv = map[string]PrivilegeType{
 }
 
 // AllGlobalPrivs is all the privileges in global scope.
-var AllGlobalPrivs = []PrivilegeType{SelectPriv, InsertPriv, UpdatePriv, DeletePriv, CreatePriv, DropPriv, ProcessPriv, ReferencesPriv, AlterPriv, ShowDBPriv, SuperPriv, ExecutePriv, IndexPriv, CreateUserPriv, TriggerPriv, CreateViewPriv, ShowViewPriv, CreateRolePriv, DropRolePriv, CreateTMPTablePriv, LockTablesPriv, CreateRoutinePriv, AlterRoutinePriv, EventPriv, ShutdownPriv, ReloadPriv, FilePriv}
+var AllGlobalPrivs = []PrivilegeType{SelectPriv, InsertPriv, UpdatePriv, DeletePriv, CreatePriv, DropPriv, ProcessPriv, ReferencesPriv, AlterPriv, ShowDBPriv, SuperPriv, ExecutePriv, IndexPriv, CreateUserPriv, TriggerPriv, CreateViewPriv, ShowViewPriv, CreateRolePriv, DropRolePriv, ReplicationSlavePriv, ReplicationClientPriv, UsagePriv, CreateTMPTablePriv, LockTablesPriv, CreateRoutinePriv, AlterRoutinePriv, EventPriv, ShutdownPriv, ReloadPriv, FilePriv}
 
 // AllDBPrivs is all the privileges in database scope.
 var AllDBPrivs = []PrivilegeType{SelectPriv, InsertPriv, UpdatePriv, DeletePriv, CreatePriv, DropPriv, AlterPriv, ExecutePriv, IndexPriv, CreateViewPriv, ShowViewPriv}
