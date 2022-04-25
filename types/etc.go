@@ -24,6 +24,17 @@ import (
 	"github.com/pingcap/parser/terror"
 )
 
+// IsTypeGeometry returns a boolean indicating whether the tp is a geometry type.
+func IsTypeGeometry(tp byte) bool {
+	switch tp {
+	case mysql.TypeGeometry, mysql.TypePoint, mysql.TypeLineString, mysql.TypePolygon,
+		mysql.TypeMultiPoint, mysql.TypeMultiLineString, mysql.TypeMultiPolygon, mysql.TypeGeometryCollection:
+		return true
+	default:
+		return false
+	}
+}
+
 // IsTypeBlob returns a boolean indicating whether the tp is a blob type.
 func IsTypeBlob(tp byte) bool {
 	switch tp {
@@ -41,33 +52,40 @@ func IsTypeChar(tp byte) bool {
 }
 
 var type2Str = map[byte]string{
-	mysql.TypeBit:         "bit",
-	mysql.TypeBlob:        "text",
-	mysql.TypeDate:        "date",
-	mysql.TypeDatetime:    "datetime",
-	mysql.TypeUnspecified: "unspecified",
-	mysql.TypeNewDecimal:  "decimal",
-	mysql.TypeDouble:      "double",
-	mysql.TypeEnum:        "enum",
-	mysql.TypeFloat:       "float",
-	mysql.TypeGeometry:    "geometry",
-	mysql.TypeInt24:       "mediumint",
-	mysql.TypeJSON:        "json",
-	mysql.TypeLong:        "int",
-	mysql.TypeLonglong:    "bigint",
-	mysql.TypeLongBlob:    "longtext",
-	mysql.TypeMediumBlob:  "mediumtext",
-	mysql.TypeNull:        "null",
-	mysql.TypeSet:         "set",
-	mysql.TypeShort:       "smallint",
-	mysql.TypeString:      "char",
-	mysql.TypeDuration:    "time",
-	mysql.TypeTimestamp:   "timestamp",
-	mysql.TypeTiny:        "tinyint",
-	mysql.TypeTinyBlob:    "tinytext",
-	mysql.TypeVarchar:     "varchar",
-	mysql.TypeVarString:   "var_string",
-	mysql.TypeYear:        "year",
+	mysql.TypeBit:                "bit",
+	mysql.TypeBlob:               "text",
+	mysql.TypeDate:               "date",
+	mysql.TypeDatetime:           "datetime",
+	mysql.TypeUnspecified:        "unspecified",
+	mysql.TypeNewDecimal:         "decimal",
+	mysql.TypeDouble:             "double",
+	mysql.TypeEnum:               "enum",
+	mysql.TypeFloat:              "float",
+	mysql.TypeGeometry:           "geometry",
+	mysql.TypePoint:              "point",
+	mysql.TypeLineString:         "linestring",
+	mysql.TypePolygon:            "polygon",
+	mysql.TypeMultiPoint:         "multipoint",
+	mysql.TypeMultiLineString:    "multilinestring",
+	mysql.TypeMultiPolygon:       "multipolygon",
+	mysql.TypeGeometryCollection: "geometrycollection",
+	mysql.TypeInt24:              "mediumint",
+	mysql.TypeJSON:               "json",
+	mysql.TypeLong:               "int",
+	mysql.TypeLonglong:           "bigint",
+	mysql.TypeLongBlob:           "longtext",
+	mysql.TypeMediumBlob:         "mediumtext",
+	mysql.TypeNull:               "null",
+	mysql.TypeSet:                "set",
+	mysql.TypeShort:              "smallint",
+	mysql.TypeString:             "char",
+	mysql.TypeDuration:           "time",
+	mysql.TypeTimestamp:          "timestamp",
+	mysql.TypeTiny:               "tinyint",
+	mysql.TypeTinyBlob:           "tinytext",
+	mysql.TypeVarchar:            "varchar",
+	mysql.TypeVarString:          "var_string",
+	mysql.TypeYear:               "year",
 }
 
 // TypeStr converts tp to a string.

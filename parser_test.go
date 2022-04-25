@@ -1051,6 +1051,7 @@ func (s *testParserSuite) TestDBAStmt(c *C) {
 		{`SHOW PROFILE CPU FOR QUERY 2 LIMIT 1,1`, true, "SHOW PROFILE CPU FOR QUERY 2 LIMIT 1,1"},
 		{`SHOW PROFILE CPU, MEMORY, BLOCK IO, CONTEXT SWITCHES, PAGE FAULTS, IPC, SWAPS, SOURCE FOR QUERY 1 limit 100`, true, "SHOW PROFILE CPU, MEMORY, BLOCK IO, CONTEXT SWITCHES, PAGE FAULTS, IPC, SWAPS, SOURCE FOR QUERY 1 LIMIT 100"},
 		{`SHOW MASTER STATUS`, true, "SHOW MASTER STATUS"},
+		{`SHOW SLAVE STATUS`, true, "SHOW SLAVE STATUS"},
 		{`SHOW PRIVILEGES`, true, "SHOW PRIVILEGES"},
 		// for show character set
 		{"show character set;", true, "SHOW CHARSET"},
@@ -1116,6 +1117,17 @@ func (s *testParserSuite) TestDBAStmt(c *C) {
 		{"show imports", true, "SHOW IMPORTS"},
 		// for show create import
 		{"show create import test", true, "SHOW CREATE IMPORT `test`"},
+		// for show engine
+		{"SHOW ENGINES", true, "SHOW ENGINES"},
+		{"SHOW ENGINE INNODB STATUS", true, "SHOW ENGINE `INNODB` STATUS"},
+		{"SHOW ENGINE INNODB MUTEX", true, "SHOW ENGINE `INNODB` MUTEX"},
+		// for show binlog/relay log events
+		{"show binlog events", true, "SHOW BINLOG EVENTS"},
+		{"show binlog events in '__binlog__' from 1 limit 10", true, "SHOW BINLOG EVENTS IN '__binlog__' FROM 1 LIMIT 10"},
+		{"show relaylog events", true, "SHOW RELAYLOG EVENTS"},
+		{"show relaylog events in '__binlog__' from 1 limit 10 for channel 'log'", true, "SHOW RELAYLOG EVENTS IN '__binlog__' FROM 1 LIMIT 10 FOR CHANNEL 'log'"},
+		{"show binary logs", true, "SHOW BINARY LOGS"},
+		{"show master logs", true, "SHOW MASTER LOGS"},
 
 		// for load stats
 		{"load stats '/tmp/stats.json'", true, "LOAD STATS '/tmp/stats.json'"},
@@ -5313,6 +5325,18 @@ func (s *testParserSuite) TestWindowFunctions(c *C) {
 		{`select from_unixtime(404411537129996288.22)`, true, "SELECT FROM_UNIXTIME(404411537129996288.22)"},
 	}
 	s.enableWindowFunc = true
+	s.RunTest(c, table)
+}
+
+// MySQL Spatial Data Support
+func (s *testParserSuite) TestSpatialDataType(c *C) {
+	table := []testCase{
+		{"CREATE SPATIAL INDEX g ON geom (g);", true, "CREATE SPATIAL INDEX `g` ON `geom` (`g`)"},
+		{"CREATE TABLE geom (p POINT NOT NULL);", true, "CREATE TABLE `geom` (`p` POINT NOT NULL)"},
+		{"CREATE TABLE geom (g GEOMETRY NOT NULL SRID 4326);", true, "CREATE TABLE `geom` (`g` GEOMETRY NOT NULL SRID 4326)"},
+		{"ALTER TABLE geom ADD SPATIAL INDEX (g);", true, "ALTER TABLE `geom` ADD SPATIAL(`g`)"},
+		{"ALTER TABLE geom ADD SPATIAL KEY (g);", true, "ALTER TABLE `geom` ADD SPATIAL(`g`)"},
+	}
 	s.RunTest(c, table)
 }
 

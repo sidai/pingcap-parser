@@ -2444,6 +2444,8 @@ type ShowStmtType int
 const (
 	ShowNone = iota
 	ShowEngines
+	ShowEngineStatus
+	ShowEngineMutex
 	ShowDatabases
 	ShowTables
 	ShowTableStatus
@@ -2475,6 +2477,7 @@ const (
 	ShowProfile
 	ShowProfiles
 	ShowMasterStatus
+	ShowSlaveStatus
 	ShowPrivileges
 	ShowErrors
 	ShowBindings
@@ -2489,6 +2492,10 @@ const (
 	ShowRestores
 	ShowImports
 	ShowCreateImport
+	ShowBinlogEvents
+	ShowRelayLogEvents
+	ShowBinaryLogs
+	ShowMasterLogs
 )
 
 const (
@@ -2514,7 +2521,8 @@ type ShowStmt struct {
 	Table       *TableName  // Used for showing columns.
 	Column      *ColumnName // Used for `desc table column`.
 	IndexName   model.CIStr
-	Flag        int // Some flag parsed from sql, such as FULL.
+	EngineName  model.CIStr // Used for `show engine ... status`.
+	Flag        int         // Some flag parsed from sql, such as FULL.
 	Full        bool
 	User        *auth.UserIdentity   // Used for show grants/create user.
 	Roles       []*auth.RoleIdentity // Used for show grants .. using
@@ -2525,6 +2533,12 @@ type ShowStmt struct {
 	GlobalScope bool
 	Pattern     *PatternLikeExpr
 	Where       ExprNode
+
+	// Used for `SHOW BINLOG/RELAYLOG EVENTS` syntax
+	LogName    string
+	LogPos     int64
+	LogLimit   *Limit
+	LogChannel string
 
 	ShowProfileTypes []int  // Used for `SHOW PROFILE` syntax
 	ShowProfileArgs  *int64 // Used for `SHOW PROFILE` syntax
@@ -2563,6 +2577,27 @@ func (n *ShowStmt) Restore(ctx *format.RestoreCtx) error {
 			if err := n.Where.Restore(ctx); err != nil {
 				return errors.Annotate(err, "An error occurred while restore ShowStmt.Where")
 			}
+		}
+		return nil
+	}
+	restoreLogEventOpt := func() error {
+		if n.LogName != "" {
+			ctx.WriteKeyWord(" IN ")
+			ctx.WriteString(n.LogName)
+		}
+		if n.LogPos != 0 {
+			ctx.WriteKeyWord(" FROM ")
+			ctx.WritePlainf("%d", n.LogPos)
+		}
+		if n.LogLimit != nil {
+			ctx.WritePlain(" ")
+			if err := n.LogLimit.Restore(ctx); err != nil {
+				return errors.Annotate(err, "An error occurred while restore LogEvent.Limit")
+			}
+		}
+		if n.LogChannel != "" {
+			ctx.WriteKeyWord(" FOR CHANNEL ")
+			ctx.WriteString(n.LogChannel)
 		}
 		return nil
 	}
@@ -2616,6 +2651,8 @@ func (n *ShowStmt) Restore(ctx *format.RestoreCtx) error {
 		}
 	case ShowMasterStatus:
 		ctx.WriteKeyWord("MASTER STATUS")
+	case ShowSlaveStatus:
+		ctx.WriteKeyWord("SLAVE STATUS")
 	case ShowProcessList:
 		restoreOptFull()
 		ctx.WriteKeyWord("PROCESSLIST")
@@ -2704,6 +2741,14 @@ func (n *ShowStmt) Restore(ctx *format.RestoreCtx) error {
 		switch n.Tp {
 		case ShowEngines:
 			ctx.WriteKeyWord("ENGINES")
+		case ShowEngineStatus:
+			ctx.WriteKeyWord("ENGINE ")
+			ctx.WriteName(n.EngineName.String())
+			ctx.WriteKeyWord(" STATUS")
+		case ShowEngineMutex:
+			ctx.WriteKeyWord("ENGINE ")
+			ctx.WriteName(n.EngineName.String())
+			ctx.WriteKeyWord(" MUTEX")
 		case ShowConfig:
 			ctx.WriteKeyWord("CONFIG")
 		case ShowDatabases:
@@ -2803,6 +2848,20 @@ func (n *ShowStmt) Restore(ctx *format.RestoreCtx) error {
 			ctx.WriteKeyWord("RESTORES")
 		case ShowImports:
 			ctx.WriteKeyWord("IMPORTS")
+		case ShowBinlogEvents:
+			ctx.WriteKeyWord("BINLOG EVENTS")
+			if err := restoreLogEventOpt(); err != nil {
+				return err
+			}
+		case ShowRelayLogEvents:
+			ctx.WriteKeyWord("RELAYLOG EVENTS")
+			if err := restoreLogEventOpt(); err != nil {
+				return err
+			}
+		case ShowBinaryLogs:
+			ctx.WriteKeyWord("BINARY LOGS")
+		case ShowMasterLogs:
+			ctx.WriteKeyWord("MASTER LOGS")
 		default:
 			return errors.New("Unknown ShowStmt type")
 		}

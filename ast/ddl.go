@@ -459,6 +459,7 @@ const (
 	ColumnOptionColumnFormat
 	ColumnOptionStorage
 	ColumnOptionAutoRandom
+	ColumnOptionSRID
 )
 
 var (
@@ -577,6 +578,11 @@ func (n *ColumnOption) Restore(ctx *format.RestoreCtx) error {
 		ctx.WriteKeyWord("AUTO_RANDOM")
 		if n.AutoRandomBitLength != types.UnspecifiedLength {
 			ctx.WritePlainf("(%d)", n.AutoRandomBitLength)
+		}
+	case ColumnOptionSRID:
+		ctx.WriteKeyWord("SRID ")
+		if err := n.Expr.Restore(ctx); err != nil {
+			return errors.Annotate(err, "An error occurred while splicing ColumnOption SRID Expr")
 		}
 	default:
 		return errors.New("An error occurred while splicing ColumnOption")
@@ -710,6 +716,9 @@ const (
 	ConstraintForeignKey
 	ConstraintFulltext
 	ConstraintCheck
+	ConstraintSpatial
+	ConstraintSpatialKey
+	ConstraintSpatialIndex
 )
 
 // Constraint is constraint for table definition.
@@ -782,6 +791,12 @@ func (n *Constraint) Restore(ctx *format.RestoreCtx) error {
 			ctx.WriteKeyWord("NOT ENFORCED")
 		}
 		return nil
+	case ConstraintSpatial:
+		ctx.WriteKeyWord("SPATIAL")
+	case ConstraintSpatialKey:
+		ctx.WriteKeyWord("SPATIAL KEY")
+	case ConstraintSpatialIndex:
+		ctx.WriteKeyWord("SPATIAL INDEX")
 	}
 
 	if n.Tp == ConstraintForeignKey {

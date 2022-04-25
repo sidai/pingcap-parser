@@ -288,336 +288,348 @@ import (
 	natural           "NATURAL"
 
 	/* The following tokens belong to UnReservedKeyword. Notice: make sure these tokens are contained in UnReservedKeyword. */
-	account               "ACCOUNT"
-	action                "ACTION"
-	advise                "ADVISE"
-	after                 "AFTER"
-	against               "AGAINST"
-	ago                   "AGO"
-	algorithm             "ALGORITHM"
-	always                "ALWAYS"
-	any                   "ANY"
-	ascii                 "ASCII"
-	autoIdCache           "AUTO_ID_CACHE"
-	autoIncrement         "AUTO_INCREMENT"
-	autoRandom            "AUTO_RANDOM"
-	autoRandomBase        "AUTO_RANDOM_BASE"
-	avg                   "AVG"
-	avgRowLength          "AVG_ROW_LENGTH"
-	backend               "BACKEND"
-	backup                "BACKUP"
-	backups               "BACKUPS"
-	begin                 "BEGIN"
-	bernoulli             "BERNOULLI"
-	binding               "BINDING"
-	bindings              "BINDINGS"
-	binlog                "BINLOG"
-	bitType               "BIT"
-	block                 "BLOCK"
-	booleanType           "BOOLEAN"
-	boolType              "BOOL"
-	btree                 "BTREE"
-	byteType              "BYTE"
-	cache                 "CACHE"
-	capture               "CAPTURE"
-	cascaded              "CASCADED"
-	causal                "CAUSAL"
-	chain                 "CHAIN"
-	charsetKwd            "CHARSET"
-	checkpoint            "CHECKPOINT"
-	checksum              "CHECKSUM"
-	cipher                "CIPHER"
-	cleanup               "CLEANUP"
-	client                "CLIENT"
-	clientErrorsSummary   "CLIENT_ERRORS_SUMMARY"
-	coalesce              "COALESCE"
-	collation             "COLLATION"
-	columnFormat          "COLUMN_FORMAT"
-	columns               "COLUMNS"
-	config                "CONFIG"
-	comment               "COMMENT"
-	commit                "COMMIT"
-	committed             "COMMITTED"
-	compact               "COMPACT"
-	compressed            "COMPRESSED"
-	compression           "COMPRESSION"
-	concurrency           "CONCURRENCY"
-	connection            "CONNECTION"
-	consistency           "CONSISTENCY"
-	consistent            "CONSISTENT"
-	constraints           "CONSTRAINTS"
-	context               "CONTEXT"
-	cpu                   "CPU"
-	csvBackslashEscape    "CSV_BACKSLASH_ESCAPE"
-	csvDelimiter          "CSV_DELIMITER"
-	csvHeader             "CSV_HEADER"
-	csvNotNull            "CSV_NOT_NULL"
-	csvNull               "CSV_NULL"
-	csvSeparator          "CSV_SEPARATOR"
-	csvTrimLastSeparators "CSV_TRIM_LAST_SEPARATORS"
-	current               "CURRENT"
-	clustered             "CLUSTERED"
-	cycle                 "CYCLE"
-	data                  "DATA"
-	datetimeType          "DATETIME"
-	dateType              "DATE"
-	day                   "DAY"
-	deallocate            "DEALLOCATE"
-	definer               "DEFINER"
-	delayKeyWrite         "DELAY_KEY_WRITE"
-	directory             "DIRECTORY"
-	disable               "DISABLE"
-	discard               "DISCARD"
-	disk                  "DISK"
-	do                    "DO"
-	duplicate             "DUPLICATE"
-	dynamic               "DYNAMIC"
-	enable                "ENABLE"
-	encryption            "ENCRYPTION"
-	end                   "END"
-	enforced              "ENFORCED"
-	engine                "ENGINE"
-	engines               "ENGINES"
-	enum                  "ENUM"
-	errorKwd              "ERROR"
-	escape                "ESCAPE"
-	event                 "EVENT"
-	events                "EVENTS"
-	evolve                "EVOLVE"
-	exchange              "EXCHANGE"
-	exclusive             "EXCLUSIVE"
-	execute               "EXECUTE"
-	expansion             "EXPANSION"
-	expire                "EXPIRE"
-	extended              "EXTENDED"
-	faultsSym             "FAULTS"
-	fields                "FIELDS"
-	file                  "FILE"
-	first                 "FIRST"
-	fixed                 "FIXED"
-	flush                 "FLUSH"
-	following             "FOLLOWING"
-	format                "FORMAT"
-	full                  "FULL"
-	function              "FUNCTION"
-	general               "GENERAL"
-	global                "GLOBAL"
-	grants                "GRANTS"
-	hash                  "HASH"
-	histogram             "HISTOGRAM"
-	history               "HISTORY"
-	hosts                 "HOSTS"
-	hour                  "HOUR"
-	identified            "IDENTIFIED"
-	identSQLErrors        "ERRORS"
-	importKwd             "IMPORT"
-	imports               "IMPORTS"
-	increment             "INCREMENT"
-	incremental           "INCREMENTAL"
-	indexes               "INDEXES"
-	insertMethod          "INSERT_METHOD"
-	instance              "INSTANCE"
-	invisible             "INVISIBLE"
-	invoker               "INVOKER"
-	io                    "IO"
-	ipc                   "IPC"
-	isolation             "ISOLATION"
-	issuer                "ISSUER"
-	jsonType              "JSON"
-	keyBlockSize          "KEY_BLOCK_SIZE"
-	labels                "LABELS"
-	language              "LANGUAGE"
-	last                  "LAST"
-	lastBackup            "LAST_BACKUP"
-	lastval               "LASTVAL"
-	less                  "LESS"
-	level                 "LEVEL"
-	list                  "LIST"
-	local                 "LOCAL"
-	locked                "LOCKED"
-	location              "LOCATION"
-	logs                  "LOGS"
-	master                "MASTER"
-	max_idxnum            "MAX_IDXNUM"
-	max_minutes           "MAX_MINUTES"
-	maxConnectionsPerHour "MAX_CONNECTIONS_PER_HOUR"
-	maxQueriesPerHour     "MAX_QUERIES_PER_HOUR"
-	maxRows               "MAX_ROWS"
-	maxUpdatesPerHour     "MAX_UPDATES_PER_HOUR"
-	maxUserConnections    "MAX_USER_CONNECTIONS"
-	mb                    "MB"
-	memory                "MEMORY"
-	merge                 "MERGE"
-	microsecond           "MICROSECOND"
-	minRows               "MIN_ROWS"
-	minute                "MINUTE"
-	minValue              "MINVALUE"
-	mode                  "MODE"
-	modify                "MODIFY"
-	month                 "MONTH"
-	names                 "NAMES"
-	national              "NATIONAL"
-	ncharType             "NCHAR"
-	never                 "NEVER"
-	next                  "NEXT"
-	nextval               "NEXTVAL"
-	no                    "NO"
-	nocache               "NOCACHE"
-	nocycle               "NOCYCLE"
-	nodegroup             "NODEGROUP"
-	nomaxvalue            "NOMAXVALUE"
-	nominvalue            "NOMINVALUE"
-	nonclustered          "NONCLUSTERED"
-	none                  "NONE"
-	nowait                "NOWAIT"
-	nvarcharType          "NVARCHAR"
-	nulls                 "NULLS"
-	off                   "OFF"
-	offset                "OFFSET"
-	onDuplicate           "ON_DUPLICATE"
-	online                "ONLINE"
-	only                  "ONLY"
-	open                  "OPEN"
-	optional              "OPTIONAL"
-	packKeys              "PACK_KEYS"
-	pageSym               "PAGE"
-	parser                "PARSER"
-	partial               "PARTIAL"
-	partitioning          "PARTITIONING"
-	partitions            "PARTITIONS"
-	password              "PASSWORD"
-	percent               "PERCENT"
-	per_db                "PER_DB"
-	per_table             "PER_TABLE"
+	account                "ACCOUNT"
+	action                 "ACTION"
+	advise                 "ADVISE"
+	after                  "AFTER"
+	against                "AGAINST"
+	ago                    "AGO"
+	algorithm              "ALGORITHM"
+	always                 "ALWAYS"
+	any                    "ANY"
+	ascii                  "ASCII"
+	autoIdCache            "AUTO_ID_CACHE"
+	autoIncrement          "AUTO_INCREMENT"
+	autoRandom             "AUTO_RANDOM"
+	autoRandomBase         "AUTO_RANDOM_BASE"
+	avg                    "AVG"
+	avgRowLength           "AVG_ROW_LENGTH"
+	backend                "BACKEND"
+	backup                 "BACKUP"
+	backups                "BACKUPS"
+	begin                  "BEGIN"
+	bernoulli              "BERNOULLI"
+	binding                "BINDING"
+	bindings               "BINDINGS"
+	binlog                 "BINLOG"
+	bitType                "BIT"
+	block                  "BLOCK"
+	booleanType            "BOOLEAN"
+	boolType               "BOOL"
+	btree                  "BTREE"
+	byteType               "BYTE"
+	cache                  "CACHE"
+	capture                "CAPTURE"
+	cascaded               "CASCADED"
+	causal                 "CAUSAL"
+	chain                  "CHAIN"
+	channel                "CHANNEL"
+	charsetKwd             "CHARSET"
+	checkpoint             "CHECKPOINT"
+	checksum               "CHECKSUM"
+	cipher                 "CIPHER"
+	cleanup                "CLEANUP"
+	client                 "CLIENT"
+	clientErrorsSummary    "CLIENT_ERRORS_SUMMARY"
+	coalesce               "COALESCE"
+	collation              "COLLATION"
+	columnFormat           "COLUMN_FORMAT"
+	columns                "COLUMNS"
+	config                 "CONFIG"
+	comment                "COMMENT"
+	commit                 "COMMIT"
+	committed              "COMMITTED"
+	compact                "COMPACT"
+	compressed             "COMPRESSED"
+	compression            "COMPRESSION"
+	concurrency            "CONCURRENCY"
+	connection             "CONNECTION"
+	consistency            "CONSISTENCY"
+	consistent             "CONSISTENT"
+	constraints            "CONSTRAINTS"
+	context                "CONTEXT"
+	cpu                    "CPU"
+	csvBackslashEscape     "CSV_BACKSLASH_ESCAPE"
+	csvDelimiter           "CSV_DELIMITER"
+	csvHeader              "CSV_HEADER"
+	csvNotNull             "CSV_NOT_NULL"
+	csvNull                "CSV_NULL"
+	csvSeparator           "CSV_SEPARATOR"
+	csvTrimLastSeparators  "CSV_TRIM_LAST_SEPARATORS"
+	current                "CURRENT"
+	clustered              "CLUSTERED"
+	cycle                  "CYCLE"
+	data                   "DATA"
+	datetimeType           "DATETIME"
+	dateType               "DATE"
+	day                    "DAY"
+	deallocate             "DEALLOCATE"
+	definer                "DEFINER"
+	delayKeyWrite          "DELAY_KEY_WRITE"
+	directory              "DIRECTORY"
+	disable                "DISABLE"
+	discard                "DISCARD"
+	disk                   "DISK"
+	do                     "DO"
+	duplicate              "DUPLICATE"
+	dynamic                "DYNAMIC"
+	enable                 "ENABLE"
+	encryption             "ENCRYPTION"
+	end                    "END"
+	enforced               "ENFORCED"
+	engine                 "ENGINE"
+	engines                "ENGINES"
+	enum                   "ENUM"
+	errorKwd               "ERROR"
+	escape                 "ESCAPE"
+	event                  "EVENT"
+	events                 "EVENTS"
+	evolve                 "EVOLVE"
+	exchange               "EXCHANGE"
+	exclusive              "EXCLUSIVE"
+	execute                "EXECUTE"
+	expansion              "EXPANSION"
+	expire                 "EXPIRE"
+	extended               "EXTENDED"
+	faultsSym              "FAULTS"
+	fields                 "FIELDS"
+	file                   "FILE"
+	first                  "FIRST"
+	fixed                  "FIXED"
+	flush                  "FLUSH"
+	following              "FOLLOWING"
+	format                 "FORMAT"
+	full                   "FULL"
+	function               "FUNCTION"
+	general                "GENERAL"
+	geometryType           "GEOMETRY"
+	geometryCollectionType "GEOMETRYCOLLECTION"
+	global                 "GLOBAL"
+	grants                 "GRANTS"
+	hash                   "HASH"
+	histogram              "HISTOGRAM"
+	history                "HISTORY"
+	hosts                  "HOSTS"
+	hour                   "HOUR"
+	identified             "IDENTIFIED"
+	identSQLErrors         "ERRORS"
+	importKwd              "IMPORT"
+	imports                "IMPORTS"
+	increment              "INCREMENT"
+	incremental            "INCREMENTAL"
+	indexes                "INDEXES"
+	insertMethod           "INSERT_METHOD"
+	instance               "INSTANCE"
+	invisible              "INVISIBLE"
+	invoker                "INVOKER"
+	io                     "IO"
+	ipc                    "IPC"
+	isolation              "ISOLATION"
+	issuer                 "ISSUER"
+	jsonType               "JSON"
+	keyBlockSize           "KEY_BLOCK_SIZE"
+	labels                 "LABELS"
+	language               "LANGUAGE"
+	last                   "LAST"
+	lastBackup             "LAST_BACKUP"
+	lastval                "LASTVAL"
+	less                   "LESS"
+	level                  "LEVEL"
+	lineStringType         "LINESTRING"
+	list                   "LIST"
+	local                  "LOCAL"
+	locked                 "LOCKED"
+	location               "LOCATION"
+	logs                   "LOGS"
+	master                 "MASTER"
+	max_idxnum             "MAX_IDXNUM"
+	max_minutes            "MAX_MINUTES"
+	maxConnectionsPerHour  "MAX_CONNECTIONS_PER_HOUR"
+	maxQueriesPerHour      "MAX_QUERIES_PER_HOUR"
+	maxRows                "MAX_ROWS"
+	maxUpdatesPerHour      "MAX_UPDATES_PER_HOUR"
+	maxUserConnections     "MAX_USER_CONNECTIONS"
+	mb                     "MB"
+	memory                 "MEMORY"
+	merge                  "MERGE"
+	microsecond            "MICROSECOND"
+	minRows                "MIN_ROWS"
+	minute                 "MINUTE"
+	minValue               "MINVALUE"
+	mode                   "MODE"
+	modify                 "MODIFY"
+	month                  "MONTH"
+	multiPointType         "MULTIPOINT"
+	multiLineStringType    "MULTILINESTRING"
+	multiPolygonType       "MULTIPOLYGON"
+	mutex                  "MUTEX"
+	names                  "NAMES"
+	national               "NATIONAL"
+	ncharType              "NCHAR"
+	never                  "NEVER"
+	next                   "NEXT"
+	nextval                "NEXTVAL"
+	no                     "NO"
+	nocache                "NOCACHE"
+	nocycle                "NOCYCLE"
+	nodegroup              "NODEGROUP"
+	nomaxvalue             "NOMAXVALUE"
+	nominvalue             "NOMINVALUE"
+	nonclustered           "NONCLUSTERED"
+	none                   "NONE"
+	nowait                 "NOWAIT"
+	nvarcharType           "NVARCHAR"
+	nulls                  "NULLS"
+	off                    "OFF"
+	offset                 "OFFSET"
+	onDuplicate            "ON_DUPLICATE"
+	online                 "ONLINE"
+	only                   "ONLY"
+	open                   "OPEN"
+	optional               "OPTIONAL"
+	packKeys               "PACK_KEYS"
+	pageSym                "PAGE"
+	parser                 "PARSER"
+	partial                "PARTIAL"
+	partitioning           "PARTITIONING"
+	partitions             "PARTITIONS"
+	password               "PASSWORD"
+	percent                "PERCENT"
+	per_db                 "PER_DB"
+	per_table              "PER_TABLE"
 	pipesAsOr
-	plugins               "PLUGINS"
-	policy                "POLICY"
-	preSplitRegions       "PRE_SPLIT_REGIONS"
-	preceding             "PRECEDING"
-	prepare               "PREPARE"
-	preserve              "PRESERVE"
-	privileges            "PRIVILEGES"
-	process               "PROCESS"
-	processlist           "PROCESSLIST"
-	profile               "PROFILE"
-	profiles              "PROFILES"
-	proxy                 "PROXY"
-	purge                 "PURGE"
-	quarter               "QUARTER"
-	queries               "QUERIES"
-	query                 "QUERY"
-	quick                 "QUICK"
-	rateLimit             "RATE_LIMIT"
-	rebuild               "REBUILD"
-	recover               "RECOVER"
-	redundant             "REDUNDANT"
-	reload                "RELOAD"
-	remove                "REMOVE"
-	reorganize            "REORGANIZE"
-	repair                "REPAIR"
-	repeatable            "REPEATABLE"
-	replica               "REPLICA"
-	replicas              "REPLICAS"
-	replication           "REPLICATION"
-	required              "REQUIRED"
-	respect               "RESPECT"
-	restart               "RESTART"
-	restore               "RESTORE"
-	restores              "RESTORES"
-	resume                "RESUME"
-	reverse               "REVERSE"
-	role                  "ROLE"
-	rollback              "ROLLBACK"
-	routine               "ROUTINE"
-	rowCount              "ROW_COUNT"
-	rowFormat             "ROW_FORMAT"
-	rtree                 "RTREE"
-	san                   "SAN"
-	second                "SECOND"
-	secondaryEngine       "SECONDARY_ENGINE"
-	secondaryLoad         "SECONDARY_LOAD"
-	secondaryUnload       "SECONDARY_UNLOAD"
-	security              "SECURITY"
-	sendCredentialsToTiKV "SEND_CREDENTIALS_TO_TIKV"
-	separator             "SEPARATOR"
-	sequence              "SEQUENCE"
-	serial                "SERIAL"
-	serializable          "SERIALIZABLE"
-	session               "SESSION"
-	setval                "SETVAL"
-	shardRowIDBits        "SHARD_ROW_ID_BITS"
-	share                 "SHARE"
-	shared                "SHARED"
-	shutdown              "SHUTDOWN"
-	signed                "SIGNED"
-	simple                "SIMPLE"
-	skip                  "SKIP"
-	skipSchemaFiles       "SKIP_SCHEMA_FILES"
-	slave                 "SLAVE"
-	slow                  "SLOW"
-	snapshot              "SNAPSHOT"
-	some                  "SOME"
-	source                "SOURCE"
-	sqlBufferResult       "SQL_BUFFER_RESULT"
-	sqlCache              "SQL_CACHE"
-	sqlNoCache            "SQL_NO_CACHE"
-	sqlTsiDay             "SQL_TSI_DAY"
-	sqlTsiHour            "SQL_TSI_HOUR"
-	sqlTsiMinute          "SQL_TSI_MINUTE"
-	sqlTsiMonth           "SQL_TSI_MONTH"
-	sqlTsiQuarter         "SQL_TSI_QUARTER"
-	sqlTsiSecond          "SQL_TSI_SECOND"
-	sqlTsiWeek            "SQL_TSI_WEEK"
-	sqlTsiYear            "SQL_TSI_YEAR"
-	start                 "START"
-	statsAutoRecalc       "STATS_AUTO_RECALC"
-	statsPersistent       "STATS_PERSISTENT"
-	statsSamplePages      "STATS_SAMPLE_PAGES"
-	status                "STATUS"
-	storage               "STORAGE"
-	strictFormat          "STRICT_FORMAT"
-	subject               "SUBJECT"
-	subpartition          "SUBPARTITION"
-	subpartitions         "SUBPARTITIONS"
-	super                 "SUPER"
-	swaps                 "SWAPS"
-	switchesSym           "SWITCHES"
-	system                "SYSTEM"
-	systemTime            "SYSTEM_TIME"
-	tableChecksum         "TABLE_CHECKSUM"
-	tables                "TABLES"
-	tablespace            "TABLESPACE"
-	temporary             "TEMPORARY"
-	temptable             "TEMPTABLE"
-	textType              "TEXT"
-	than                  "THAN"
-	tikvImporter          "TIKV_IMPORTER"
-	timestampType         "TIMESTAMP"
-	timeType              "TIME"
-	tp                    "TYPE"
-	trace                 "TRACE"
-	traditional           "TRADITIONAL"
-	transaction           "TRANSACTION"
-	triggers              "TRIGGERS"
-	truncate              "TRUNCATE"
-	unbounded             "UNBOUNDED"
-	uncommitted           "UNCOMMITTED"
-	undefined             "UNDEFINED"
-	unicodeSym            "UNICODE"
-	unknown               "UNKNOWN"
-	user                  "USER"
-	validation            "VALIDATION"
-	value                 "VALUE"
-	variables             "VARIABLES"
-	view                  "VIEW"
-	visible               "VISIBLE"
-	warnings              "WARNINGS"
-	week                  "WEEK"
-	weightString          "WEIGHT_STRING"
-	without               "WITHOUT"
-	x509                  "X509"
-	yearType              "YEAR"
-	wait                  "WAIT"
+	plugins                "PLUGINS"
+	pointType              "POINT"
+	policy                 "POLICY"
+	polygonType            "POLYGON"
+	preSplitRegions        "PRE_SPLIT_REGIONS"
+	preceding              "PRECEDING"
+	prepare                "PREPARE"
+	preserve               "PRESERVE"
+	privileges             "PRIVILEGES"
+	process                "PROCESS"
+	processlist            "PROCESSLIST"
+	profile                "PROFILE"
+	profiles               "PROFILES"
+	proxy                  "PROXY"
+	purge                  "PURGE"
+	quarter                "QUARTER"
+	queries                "QUERIES"
+	query                  "QUERY"
+	quick                  "QUICK"
+	rateLimit              "RATE_LIMIT"
+	rebuild                "REBUILD"
+	recover                "RECOVER"
+	redundant              "REDUNDANT"
+	relaylog               "RELAYLOG"
+	reload                 "RELOAD"
+	remove                 "REMOVE"
+	reorganize             "REORGANIZE"
+	repair                 "REPAIR"
+	repeatable             "REPEATABLE"
+	replica                "REPLICA"
+	replicas               "REPLICAS"
+	replication            "REPLICATION"
+	required               "REQUIRED"
+	respect                "RESPECT"
+	restart                "RESTART"
+	restore                "RESTORE"
+	restores               "RESTORES"
+	resume                 "RESUME"
+	reverse                "REVERSE"
+	role                   "ROLE"
+	rollback               "ROLLBACK"
+	routine                "ROUTINE"
+	rowCount               "ROW_COUNT"
+	rowFormat              "ROW_FORMAT"
+	rtree                  "RTREE"
+	san                    "SAN"
+	second                 "SECOND"
+	secondaryEngine        "SECONDARY_ENGINE"
+	secondaryLoad          "SECONDARY_LOAD"
+	secondaryUnload        "SECONDARY_UNLOAD"
+	security               "SECURITY"
+	sendCredentialsToTiKV  "SEND_CREDENTIALS_TO_TIKV"
+	separator              "SEPARATOR"
+	sequence               "SEQUENCE"
+	serial                 "SERIAL"
+	serializable           "SERIALIZABLE"
+	session                "SESSION"
+	setval                 "SETVAL"
+	shardRowIDBits         "SHARD_ROW_ID_BITS"
+	share                  "SHARE"
+	shared                 "SHARED"
+	shutdown               "SHUTDOWN"
+	signed                 "SIGNED"
+	simple                 "SIMPLE"
+	skip                   "SKIP"
+	skipSchemaFiles        "SKIP_SCHEMA_FILES"
+	slave                  "SLAVE"
+	slow                   "SLOW"
+	snapshot               "SNAPSHOT"
+	some                   "SOME"
+	source                 "SOURCE"
+	sqlBufferResult        "SQL_BUFFER_RESULT"
+	sqlCache               "SQL_CACHE"
+	sqlNoCache             "SQL_NO_CACHE"
+	sqlTsiDay              "SQL_TSI_DAY"
+	sqlTsiHour             "SQL_TSI_HOUR"
+	sqlTsiMinute           "SQL_TSI_MINUTE"
+	sqlTsiMonth            "SQL_TSI_MONTH"
+	sqlTsiQuarter          "SQL_TSI_QUARTER"
+	sqlTsiSecond           "SQL_TSI_SECOND"
+	sqlTsiWeek             "SQL_TSI_WEEK"
+	sqlTsiYear             "SQL_TSI_YEAR"
+	srid                   "SRID"
+	start                  "START"
+	statsAutoRecalc        "STATS_AUTO_RECALC"
+	statsPersistent        "STATS_PERSISTENT"
+	statsSamplePages       "STATS_SAMPLE_PAGES"
+	status                 "STATUS"
+	storage                "STORAGE"
+	strictFormat           "STRICT_FORMAT"
+	subject                "SUBJECT"
+	subpartition           "SUBPARTITION"
+	subpartitions          "SUBPARTITIONS"
+	super                  "SUPER"
+	swaps                  "SWAPS"
+	switchesSym            "SWITCHES"
+	system                 "SYSTEM"
+	systemTime             "SYSTEM_TIME"
+	tableChecksum          "TABLE_CHECKSUM"
+	tables                 "TABLES"
+	tablespace             "TABLESPACE"
+	temporary              "TEMPORARY"
+	temptable              "TEMPTABLE"
+	textType               "TEXT"
+	than                   "THAN"
+	tikvImporter           "TIKV_IMPORTER"
+	timestampType          "TIMESTAMP"
+	timeType               "TIME"
+	tp                     "TYPE"
+	trace                  "TRACE"
+	traditional            "TRADITIONAL"
+	transaction            "TRANSACTION"
+	triggers               "TRIGGERS"
+	truncate               "TRUNCATE"
+	unbounded              "UNBOUNDED"
+	uncommitted            "UNCOMMITTED"
+	undefined              "UNDEFINED"
+	unicodeSym             "UNICODE"
+	unknown                "UNKNOWN"
+	user                   "USER"
+	validation             "VALIDATION"
+	value                  "VALUE"
+	variables              "VARIABLES"
+	view                   "VIEW"
+	visible                "VISIBLE"
+	warnings               "WARNINGS"
+	week                   "WEEK"
+	weightString           "WEIGHT_STRING"
+	without                "WITHOUT"
+	x509                   "X509"
+	yearType               "YEAR"
+	wait                   "WAIT"
 
 	/* The following tokens belong to NotKeywordToken. Notice: make sure these tokens are contained in NotKeywordToken. */
 	addDate               "ADDDATE"
@@ -1277,6 +1289,10 @@ import (
 	PlacementOptions                       "Placement rules options"
 	PlacementSpec                          "Placement rules specification"
 	PlacementSpecList                      "Placement rules specifications"
+	SpatialType                            "Spatial types"
+	InFileOpt                              "[IN 'log_name']"
+	FromPosOpt                             "[FROM pos]"
+	ForChannelOpt                          "[FOR CHANNEL channel]"
 
 %type	<ident>
 	AsOpt             "AS or EmptyString"
@@ -2973,6 +2989,10 @@ ColumnOption:
 	{
 		$$ = &ast.ColumnOption{Tp: ast.ColumnOptionAutoRandom, AutoRandomBitLength: $2.(int)}
 	}
+|	"SRID" intLit
+	{
+		$$ = &ast.ColumnOption{Tp: ast.ColumnOptionSRID, Expr: ast.NewValueExpr($2, parser.charset, parser.collation)}
+	}
 
 StorageMedia:
 	"DEFAULT"
@@ -3125,6 +3145,26 @@ ConstraintElem:
 			Expr:     $3.(ast.ExprNode),
 			Enforced: $5.(bool),
 		}
+	}
+|	"SPATIAL" KeyOrIndexOpt IndexNameAndTypeOpt '(' IndexPartSpecificationList ')' IndexOptionList
+	{
+		c := &ast.Constraint{
+			Tp:           ast.ConstraintSpatial,
+			Keys:         $5.([]*ast.IndexPartSpecification),
+			Name:         $3.([]interface{})[0].(*ast.NullString).String,
+			IsEmptyIndex: $3.([]interface{})[0].(*ast.NullString).Empty,
+		}
+		if $7 != nil {
+			c.Option = $7.(*ast.IndexOption)
+		}
+
+		if indexType := $3.([]interface{})[1]; indexType != nil {
+			if c.Option == nil {
+				c.Option = &ast.IndexOption{}
+			}
+			c.Option.Tp = indexType.(model.IndexType)
+		}
+		$$ = c
 	}
 
 Match:
@@ -5881,6 +5921,18 @@ UnReservedKeyword:
 |	"CLUSTERED"
 |	"NONCLUSTERED"
 |	"PRESERVE"
+|	"GEOMETRY"
+|	"POINT"
+|	"LINESTRING"
+|	"POLYGON"
+|	"MULTIPOINT"
+|	"MULTILINESTRING"
+|	"MULTIPOLYGON"
+|	"GEOMETRYCOLLECTION"
+|	"SRID"
+|	"MUTEX"
+|	"RELAYLOG"
+|	"CHANNEL"
 
 TiDBKeyword:
 	"ADMIN"
@@ -9988,6 +10040,12 @@ ShowStmt:
 			Tp: ast.ShowMasterStatus,
 		}
 	}
+|	"SHOW" "SLAVE" "STATUS"
+	{
+		$$ = &ast.ShowStmt{
+			Tp: ast.ShowSlaveStatus,
+		}
+	}
 |	"SHOW" OptFull "PROCESSLIST"
 	{
 		$$ = &ast.ShowStmt{
@@ -10028,6 +10086,70 @@ ShowStmt:
 		$$ = &ast.ShowStmt{
 			Tp: ast.ShowBuiltins,
 		}
+	}
+|	"SHOW" "BINLOG" "EVENTS" InFileOpt FromPosOpt SelectStmtLimitOpt
+	{
+		v := &ast.ShowStmt{
+			Tp:      ast.ShowBinlogEvents,
+			LogName: $4.(string),
+			LogPos:  $5.(int64),
+		}
+		if $6 != nil {
+			v.LogLimit = $6.(*ast.Limit)
+		}
+		$$ = v
+	}
+|	"SHOW" "RELAYLOG" "EVENTS" InFileOpt FromPosOpt SelectStmtLimitOpt ForChannelOpt
+	{
+		v := &ast.ShowStmt{
+			Tp:         ast.ShowRelayLogEvents,
+			LogName:    $4.(string),
+			LogPos:     $5.(int64),
+			LogChannel: $7.(string),
+		}
+		if $6 != nil {
+			v.LogLimit = $6.(*ast.Limit)
+		}
+		$$ = v
+	}
+|	"SHOW" "BINARY" "LOGS"
+	{
+		$$ = &ast.ShowStmt{
+			Tp: ast.ShowBinaryLogs,
+		}
+	}
+|	"SHOW" "MASTER" "LOGS"
+	{
+		$$ = &ast.ShowStmt{
+			Tp: ast.ShowMasterLogs,
+		}
+	}
+
+FromPosOpt:
+	{
+		$$ = int64(0)
+	}
+|	"FROM" SignedNum
+	{
+		$$ = $2
+	}
+
+InFileOpt:
+	{
+		$$ = ""
+	}
+|	"IN" stringLit
+	{
+		$$ = $2
+	}
+
+ForChannelOpt:
+	{
+		$$ = ""
+	}
+|	"FOR" "CHANNEL" stringLit
+	{
+		$$ = $3
 	}
 
 ShowProfileTypesOpt:
@@ -10118,6 +10240,20 @@ ShowTargetFilterable:
 	"ENGINES"
 	{
 		$$ = &ast.ShowStmt{Tp: ast.ShowEngines}
+	}
+|	"ENGINE" Identifier "MUTEX"
+	{
+		$$ = &ast.ShowStmt{
+			Tp:         ast.ShowEngineMutex,
+			EngineName: model.NewCIStr($2),
+		}
+	}
+|	"ENGINE" Identifier "STATUS"
+	{
+		$$ = &ast.ShowStmt{
+			Tp:         ast.ShowEngineStatus,
+			EngineName: model.NewCIStr($2),
+		}
 	}
 |	"DATABASES"
 	{
@@ -10944,6 +11080,7 @@ Type:
 	NumericType
 |	StringType
 |	DateAndTimeType
+|	SpatialType
 
 NumericType:
 	IntegerType OptFieldLen FieldOpts
@@ -11448,6 +11585,48 @@ DateAndTimeType:
 			yylex.AppendError(ErrInvalidYearColumnLength.GenWithStackByArgs())
 			return -1
 		}
+		$$ = x
+	}
+
+SpatialType:
+	"GEOMETRY"
+	{
+		x := types.NewFieldType(mysql.TypeGeometry)
+		$$ = x
+	}
+|	"POINT"
+	{
+		x := types.NewFieldType(mysql.TypePoint)
+		$$ = x
+	}
+|	"LINESTRING"
+	{
+		x := types.NewFieldType(mysql.TypeLineString)
+		$$ = x
+	}
+|	"POLYGON"
+	{
+		x := types.NewFieldType(mysql.TypePolygon)
+		$$ = x
+	}
+|	"MULTIPOINT"
+	{
+		x := types.NewFieldType(mysql.TypeMultiPoint)
+		$$ = x
+	}
+|	"MULTILINESTRING"
+	{
+		x := types.NewFieldType(mysql.TypeMultiLineString)
+		$$ = x
+	}
+|	"MULTIPOLYGON"
+	{
+		x := types.NewFieldType(mysql.TypeMultiPolygon)
+		$$ = x
+	}
+|	"GEOMETRYCOLLECTION"
+	{
+		x := types.NewFieldType(mysql.TypeGeometryCollection)
 		$$ = x
 	}
 
